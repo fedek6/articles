@@ -19,3 +19,11 @@ cd bar
 git branch -r
 git switch remote-brach
 ```
+
+## Create a new branch from current branch
+
+This will create a new branch from the current branch and switch to it.
+
+```bash
+git checkout -b foo-bar $(git symbolic-ref --short HEAD)
+```
