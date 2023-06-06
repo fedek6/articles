@@ -1,0 +1,21 @@
+---
+title: Basic git scenarios cheatsheet
+date: "2023-06-06"
+slug: /basic-git-scenarios-cheatsheet
+tags: ["git", "cheatsheet", "version-control", "repositories", "git-basics"]
+illustration: "pexels-sabrina-gelbart-249798.jpg"
+summary: Dive into the basics of Git with my essential cheat sheet. Learn simple commits, branching, merging, and more. Navigate your repositories with ease!"
+---
+
+Here is a list of basic git commands that I use on a daily basis. I hope you find it useful!
+
+## Clone remote repository & switch to a specific remote branch
+
+In this scenario Git will automatically create a local branch with the same name as the remote branch.
+
+```bash
+git clone git@github.com:foo/bar.git
+cd bar
+git branch -r
+git switch remote-brach
+```
