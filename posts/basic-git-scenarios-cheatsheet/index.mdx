@@ -7,7 +7,7 @@ illustration: "pexels-sabrina-gelbart-249798.jpg"
 summary: Dive into the basics of Git with my essential cheat sheet. Learn simple commits, branching, merging, and more. Navigate your repositories with ease!"
 ---
 
-Here is a list of basic git commands that I use on a daily basis. I hope you find it useful!
+Here are some basic Git scenarios that I use on a daily basis.
 
 ## Clone remote repository & switch to a specific remote branch
 
@@ -17,13 +17,22 @@ In this scenario Git will automatically create a local branch with the same name
 git clone git@github.com:foo/bar.git
 cd bar
 git branch -r
-git switch remote-brach
+git switch [remote-branch]
 ```
 
 ## Create a new branch from current branch
 
-This will create a new branch from the current branch and switch to it.
+This will create a new branch from the current branch and automatically switch to it.
 
 ```bash
-git checkout -b foo-bar $(git symbolic-ref --short HEAD)
+git checkout -b [new-branch] $(git symbolic-ref --short HEAD)
+```
+
+## Reset branch to remote HEAD
+
+If you have any problems with your local branch and want to reset it to the remote HEAD, you can do it with the following commands.
+
+```bash
+git fetch origin
+git reset --hard origin/master
 ```
