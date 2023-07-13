@@ -1,0 +1,40 @@
+---
+title: Logging SQL info in Prisma
+date: "2023-07-13"
+slug: /logging-in-prisma
+tags: ["Node.js", "Prisma", "SQL"]
+illustration: "pexels-sabrina-gelbart-249798.jpg"
+summary: This is short snippet that shows how to log raw SQL queries in Prisma.
+---
+
+Prisma is a great tool for working with databases. It allows you to write queries in a type-safe way and it's easy to use. However, sometimes you need to see the raw SQL queries that are being executed. This is especially useful when you're debugging a problem with your database.
+
+```ts
+const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
+
+function replacePlaceholders(input: string, values: any[]) {
+  return input.replace(/\$(\d+)/g, (match, placeholderIndex) => {
+    const index = parseInt(placeholderIndex) - 1;
+    if (values[index] !== undefined) {
+      // Add single quotes around string values
+      return typeof values[index] === "string"
+        ? `'${values[index]}'`
+        : values[index];
+    }
+    return match;
+  });
+}
+
+function LogQueryHandler(e: Prisma.QueryEvent) {
+  console.log("🧩 Params: " + e.params);
+  console.log(
+    "📜 Nice query:",
+    replacePlaceholders(e.query, JSON.parse(e.params))
+  );
+  console.log("⏱️ Duration: " + e.duration + "ms");
+}
+
+// @ts-ignore
+prisma.$on("query", LogQueryHandler);
+});
+```
