@@ -1,0 +1,66 @@
+---
+title: Basic git scenarios cheatsheet
+date: "2023-06-06"
+slug: /basic-git-scenarios-cheatsheet
+tags: ["git", "cheatsheet", "version-control", "repositories", "git-basics"]
+illustration: "pexels-sabrina-gelbart-249798.jpg"
+summary: Dive into the basics of Git with my essential cheat sheet. Learn simple commits, branching, merging, and more. Navigate your repositories with ease!"
+---
+
+## Basic scenarios
+
+Here are some basic Git scenarios that I use on a daily basis.
+
+### Clone remote repository & switch to a specific remote branch
+
+In this scenario Git will automatically create a local branch with the same name as the remote branch.
+
+```bash
+git clone git@github.com:foo/bar.git
+cd bar
+git branch -r
+git switch [remote-branch]
+```
+
+### Create a new branch from the current branch
+
+This will create a new branch from the current branch and automatically switch to it.
+
+```bash
+git checkout -b [new-branch] $(git symbolic-ref --short HEAD)
+```
+
+### Reset branch to remote HEAD
+
+If you have any problems with your local branch and want to reset it to the remote HEAD, you can do it with the following commands.
+
+```bash
+git fetch origin
+git reset --hard origin/master
+```
+
+### Restore a file to the state from before a specific commit
+
+If you want to restore a file to the state from a specific commit, you can find hash of the commit prior to the one with changes (it doesn't need to contain the file you're interested in).
+
+```bash
+git checkout [commit-hash] -- [file-path]
+```
+
+For example:
+
+```bash
+git checkout d38456758c605e978edeb5c3bf2febefa111fc67 -- src/components/modules/Form.tsxgit checkout d38456758c605e978edeb5c3bf2febefa111fc67 -- src/components/modules/Form.tsx
+```
+
+> Warning! This will overwrite the file in your working directory.
+
+## Submodules
+
+### Fetch all updates for submodules
+
+```bash
+git submodule foreach 'git fetch --all'
+```
+
+> Info: This command works like a loop. It will execute `git fetch --all` for each submodule.
