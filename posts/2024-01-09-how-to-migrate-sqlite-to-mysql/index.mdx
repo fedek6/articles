@@ -1,0 +1,45 @@
+---
+title: How to migrate sqlite3 to MySQL
+date: "2024-01-09"
+slug: /how-to-migrate-sqlite-to-mysql
+tags: ["sqlite", "mysql", "migration"]
+illustration: "pexels-sabrina-gelbart-249798.jpg"
+summary: In a few steps I'll show you how to migrate your sqlite3 database to MySQL.
+---
+
+## Prepare schema
+
+```bash
+sqlite3 mydatabase.db .schema > schema.sql
+```
+
+* Replace `"` with ```
+* Remove `CREATE TABLE sqlite_sequence(name,seq);`
+* Replace `autoincrement` with `AUTO_INCREMENT`
+* Replace `varchar` with `varchar(255)` (case sensitive)
+* Replace `CLOB` with `TEXT`
+* Replace ` COLLATE BINARY` with nothing
+* Replace `(256)` with `(255)` (everything bigger than 255 should be 255 or changed to `TEXT`)
+* Remove or replace `check in` with `enum`
+
+## Dump data without schema
+
+```bash
+sqlite3 db.sqlite .dump | grep -v '^CREATE TABLE' > data.sql
+```
+
+## Import schema
+
+```bash
+mysql -u oko -p db < ./schema.sql
+```
+
+Fix errors if any.
+
+## Import data
+
+```bash
+mysql -u oko -p db < ./data.sql
+````
+
+Fix errors if any.
